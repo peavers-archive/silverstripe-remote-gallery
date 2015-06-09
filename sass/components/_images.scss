@@ -1,0 +1,38 @@
+@import 'base';
+
+.container {
+
+  .col-2 {
+    float: left;
+  }
+
+  .mix {
+    display: none;
+  }
+
+  img {
+    @include safe-rem(margin-bottom, 15);
+    width: 100%;
+    border: 3px solid $blue-500;
+  }
+
+}
+
+.fancybox-title {
+
+  h1 {
+    @include safe-rem(padding, 5 10);
+    display: block;
+    color: $white;
+    background-color: $blue-500;
+  }
+
+  p {
+    @include safe-rem(padding, 10);
+  }
+
+}
+
+.fancybox-skin {
+  @include safe-rem(margin, 20);
+}

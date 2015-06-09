@@ -1,0 +1,9 @@
+@import 'mixins';
+@import 'color';
+
+//scss-lint:disable all
+%base-shadow {
+  -webkit-box-shadow: rgba(0, 0, 0, .117647) 0 0 2px 0, rgba(0, 0, 0, .239216) 0 2px 4px 0;
+  box-shadow: rgba(0, 0, 0, .117647) 0 0 2px 0, rgba(0, 0, 0, .239216) 0 2px 4px 0;
+}
+// scss-lint:enable all

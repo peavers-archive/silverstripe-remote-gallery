@@ -1,0 +1,5 @@
+{
+  "name": "moe/remote-gallery",
+  "description": "Remote gallery",
+  "type": "silverstripe-module"
+}

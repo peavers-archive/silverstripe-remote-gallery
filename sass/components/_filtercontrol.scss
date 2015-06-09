@@ -1,0 +1,19 @@
+@import 'base';
+
+.filter-control {
+
+  @include safe-rem(margin-bottom, 50);
+
+  li {
+    display: inline-block;
+  }
+
+  .filter {
+    @include button($blue-500);
+  }
+
+  .active {
+    @include button($grey-500);
+  }
+
+}
