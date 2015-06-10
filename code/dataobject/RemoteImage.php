@@ -37,10 +37,6 @@ class RemoteImage extends DataObject
                 ->setDescription("<strong>Note: </strong>The url must end with an image extension such as .jpg, .png, .gif")
         ));
 
-//        $fields->addFieldsToTab("Root.ImageTags", array(
-//            GridField::create('ImageTag', 'Image Tag', $this->ImageTag(), GridFieldConfig_RelationEditor::create()),
-//        ));
-
         $fields->removeByName('GalleryPageID');
         $fields->removeByName('ThumbnailImage');
 
@@ -107,18 +103,24 @@ class RemoteImage extends DataObject
      */
     public function onBeforeWrite()
     {
+        // Fetch the image based on the
         $url = $this->RemoteLink;
         $filename = mt_rand(10000, 999999) . "." . strtolower(pathinfo($url, PATHINFO_EXTENSION));
         $img = ASSETS_PATH . '/cache/' . $filename;
-        file_put_contents($img, file_get_contents($url));
 
+        // Confirm the download is successful
+        if (!file_put_contents($img, file_get_contents($url))) {
+            user_error("Issue downloading file from internet", E_USER_WARNING);
+        }
+
+        // Resize downloaded image
         $backend = Injector::inst()->createWithArgs(Image::get_backend(), array($img));
         $newBackend = $backend->croppedResize(136, 136);
         $newBackend->writeTo($img);
 
+        // Create and save image object
         $folderToSave = 'assets/cache/';
         $folderObject = DataObject::get_one("Folder", "`Filename` = '{$folderToSave}'");
-
         $thumbnailObject = Object::create('Image');
         $thumbnailObject->ParentID = $folderObject->ID;
         $thumbnailObject->Name = $filename;
