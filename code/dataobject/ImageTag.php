@@ -18,6 +18,18 @@ class ImageTag extends DataObject
         'Label' => 'Tag name'
     );
 
+    public function getCMSFields()
+    {
+        $fields = parent::getCMSFields();
+
+        $fields->addFieldsToTab("Root.Main", array(
+            TextField::create("Title", "Tag"),
+            TextField::create("Label", "Label")->setDescription("Label on the button for filtering tags")
+        ));
+
+        return $fields;
+    }
+
     public function onBeforeWrite()
     {
         $safeTitle = $this->Title;

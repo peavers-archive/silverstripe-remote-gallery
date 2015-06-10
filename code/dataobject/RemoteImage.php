@@ -103,39 +103,58 @@ class RemoteImage extends DataObject
      */
     public function onBeforeWrite()
     {
-        // Fetch the image based on the
-        $url = $this->RemoteLink;
-        $filename = mt_rand(10000, 999999) . "." . strtolower(pathinfo($url, PATHINFO_EXTENSION));
-        $img = ASSETS_PATH . '/cache/' . $filename;
-
-        // use proxy if the environment file has a proxy definition
-        if (defined('SS_OUTBOUND_PROXY') && defined('SS_OUTBOUND_PROXY_PORT')) {
-            $context = stream_context_create(array(
-                'http' => array(
-                    'proxy'           => sprintf('tcp://%s:%s', SS_OUTBOUND_PROXY, SS_OUTBOUND_PROXY_PORT),
-                    'request_fulluri' => true
-                )
-            ));
-            file_put_contents($img, file_get_contents($url, false, $context));
-        } else {
-            file_put_contents($img, file_get_contents($url));
-        }
-
-        // Resize downloaded image
-        $backend = Injector::inst()->createWithArgs(Image::get_backend(), array($img));
-        $newBackend = $backend->croppedResize(136, 136);
-        $newBackend->writeTo($img);
-
-        // Create and save image object
+        // Create folder object
         $folderToSave = 'assets/cache/';
         $folderObject = DataObject::get_one("Folder", "`Filename` = '{$folderToSave}'");
-        $thumbnailObject = Object::create('Image');
-        $thumbnailObject->ParentID = $folderObject->ID;
-        $thumbnailObject->Name = $filename;
-        $thumbnailObject->OwnerID = (Member::currentUser() ? Member::currentUser()->ID : 0);
-        $thumbnailObject->write();
-        $this->ThumbnailImageID = DataObject::get_one('Image', "`Name` = '{$filename}'")->ID;
+
+        if ($folderObject) {
+            // Fetch the image based on the
+            $url = $this->RemoteLink;
+            $filename = mt_rand(10000, 999999) . "." . strtolower(pathinfo($url, PATHINFO_EXTENSION));
+            $img = ASSETS_PATH . '/cache/' . $filename;
+
+            // use proxy if the environment file has a proxy definition
+            if (defined('SS_OUTBOUND_PROXY') && defined('SS_OUTBOUND_PROXY_PORT')) {
+                $context = stream_context_create(array(
+                    'http' => array(
+                        'proxy'           => sprintf('tcp://%s:%s', SS_OUTBOUND_PROXY, SS_OUTBOUND_PROXY_PORT),
+                        'request_fulluri' => true
+                    )
+                ));
+                file_put_contents($img, file_get_contents($url, false, $context));
+            } else {
+                file_put_contents($img, file_get_contents($url));
+            }
+
+            // Resize downloaded image
+            $backend = Injector::inst()->createWithArgs(Image::get_backend(), array($img));
+            $newBackend = $backend->croppedResize(136, 136);
+            $newBackend->writeTo($img);
+        }
+
+        if (!DataObject::get_one('Image', "`Name` = '{$filename}'")) {
+            $thumbnailObject = Object::create('Image');
+            $thumbnailObject->ParentID = $folderObject->ID;
+            $thumbnailObject->Name = $filename;
+            $thumbnailObject->OwnerID = (Member::currentUser() ? Member::currentUser()->ID : 0);
+            $thumbnailObject->write();
+            $this->ThumbnailImageID = DataObject::get_one('Image', "`Name` = '{$filename}'")->ID;
+        }
 
         parent::onBeforeWrite();
+    }
+
+    /**
+     * Delete the thumbnail when this dataobject is deleted
+     *
+     * @return mixed
+     */
+    public function onBeforeDelete()
+    {
+        if ($this->ThumbnailImage()->exists()) {
+            $this->ThumbnailImage()->delete();
+        }
+
+        return parent::onBeforeDelete();
     }
 }
