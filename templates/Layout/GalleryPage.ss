@@ -15,7 +15,6 @@
 <section class="filter-control">
     <div class="row">
         <div class="col-12">
-            <h4>Language filter</h4>
             <ul>
                 <li>
                     <div class="filter" data-filter="all">Show All</div>
@@ -32,7 +31,7 @@
 
 <section class="gallery-images">
     <div class="row container" id="container">
-        <% loop RemoteImage %>
+        <% loop getThumbnailImage %>
 
             <div class="col-2 mix <% loop $getTag %>category-$Title <% end_loop %>">
                 <a href="$RemoteLink" class="light-box"

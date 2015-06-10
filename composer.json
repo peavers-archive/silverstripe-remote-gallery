@@ -1,5 +1,11 @@
 {
   "name": "moe/remote-gallery",
   "description": "Remote gallery",
-  "type": "silverstripe-module"
+  "type": "silverstripe-module",
+  "authors": [
+    {
+      "name": "Chris Turner",
+      "email": "chris.turner@minedu.govt.nz"
+    }
+  ]
 }

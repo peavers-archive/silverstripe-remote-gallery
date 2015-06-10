@@ -5,6 +5,12 @@
  */
 class GalleryPage extends Page
 {
+    private static $description = "Holds a collection of images";
+
+    private static $icon = 'remote-gallery/images/icons/sitetree_images/holder.png';
+
+    public $pageIcon = 'images/icons/sitetree_images/holder.png';
+
     private static $has_many = array(
         'RemoteImage' => 'RemoteImage'
     );
@@ -32,17 +38,22 @@ class GalleryPage_Controller extends Page_Controller
     {
         parent::init();
 
-        Requirements::css("gallery/css/style.css");
+        Requirements::css("remote-gallery/css/style.css");
 
-        Requirements::javascript("gallery/js/lib/jquery.min.js");
-        Requirements::javascript("gallery/js/lib/jquery.fancybox.js");
-        Requirements::javascript("gallery/js/lib/jquery.mixitup.min.js");
-        Requirements::javascript("gallery/js/functions.js");
+        Requirements::javascript("remote-gallery/js/lib/jquery.min.js");
+        Requirements::javascript("remote-gallery/js/lib/jquery.fancybox.js");
+        Requirements::javascript("remote-gallery/js/lib/jquery.mixitup.min.js");
+        Requirements::javascript("remote-gallery/js/functions.js");
     }
 
     public function getImageTag()
     {
-        return ImageTag::get()->sort('Created', 'ASC');
+        return ImageTag::get()->sort('Title', 'ASC');
+    }
+
+    public function getThumbnailImage()
+    {
+        return RemoteImage::get()->sort('Created', 'DESC');
     }
 
 }
