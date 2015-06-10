@@ -108,9 +108,17 @@ class RemoteImage extends DataObject
         $filename = mt_rand(10000, 999999) . "." . strtolower(pathinfo($url, PATHINFO_EXTENSION));
         $img = ASSETS_PATH . '/cache/' . $filename;
 
-        // Confirm the download is successful
-        if (!file_put_contents($img, file_get_contents($url))) {
-            user_error("Issue downloading file from internet", E_USER_WARNING);
+        // use proxy if the environment file has a proxy definition
+        if (defined('SS_OUTBOUND_PROXY') && defined('SS_OUTBOUND_PROXY_PORT')) {
+            $context = stream_context_create(array(
+                'http' => array(
+                    'proxy'           => sprintf('tcp://%s:%s', SS_OUTBOUND_PROXY, SS_OUTBOUND_PROXY_PORT),
+                    'request_fulluri' => true
+                )
+            ));
+            file_put_contents($img, file_get_contents($url, false, $context));
+        } else {
+            file_put_contents($img, file_get_contents($url));
         }
 
         // Resize downloaded image
