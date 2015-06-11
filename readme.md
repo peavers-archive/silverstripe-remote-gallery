@@ -18,7 +18,13 @@ Ideally composer will be used to install this module.
 
 ## Screen shots
 
-@TODO
+### CMS Screens
+![remote-gallery-create](https://github.com/peavers/silverstripe-remote-gallery/blob/master/images/screens/remote-gallery-create.png?raw=true)
+![remote-gallery-list](https://github.com/peavers/silverstripe-remote-gallery/blob/master/images/screens/remote-gallery-list.png?raw=true)
+
+### Frontend screen
+![remote-gallery-no-filter](https://github.com/peavers/silverstripe-remote-gallery/blob/master/images/screens/remote-gallery-no-filter.png?raw=true)
+![remote-gallery-filter-desks](https://github.com/peavers/silverstripe-remote-gallery/blob/master/images/screens/remote-gallery-filter-desks.png?raw=true)
 
 ## Libraries used
 * Fancybox v2
