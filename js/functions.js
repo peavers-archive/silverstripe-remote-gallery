@@ -4,7 +4,7 @@
 jQuery(function ($) {
     "use strict";
 
-    function sortProjects() {
+    function sortPhotos() {
         $('#container').mixItUp({
             animation: {
                 effects: 'fade',
@@ -13,7 +13,6 @@ jQuery(function ($) {
         });
     }
 
-    /* Opens lightbox for Jira links */
     function fancyboxToggle() {
         $(".light-box").fancybox({
             type: 'image',
@@ -35,7 +34,7 @@ jQuery(function ($) {
      * Called when the page is ready
      */
     $(document).ready(function () {
-        sortProjects();
+        sortPhotos();
         fancyboxToggle();
     });
 });
