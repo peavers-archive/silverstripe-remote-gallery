@@ -1,11 +1,32 @@
 {
   "name": "moe/remote-gallery",
-  "description": "Remote gallery",
-  "type": "silverstripe-module",
+  "description": "Gallery designed for images to be hosted elsewhere (Amazon S3, Dropbox etc) rather than on the web server. ",
+  "homepage": "https://github.com/peavers/silverstripe-remote-gallery",
+  "keywords": [
+    "silverstripe",
+    "gallery",
+    "photos",
+    "images"
+  ],
+  "license": "BSD-3-Clause",
   "authors": [
     {
       "name": "Chris Turner",
       "email": "chris.turner@minedu.govt.nz"
     }
-  ]
+  ],
+  "type": "silverstripe-module",
+  "require": {
+    "silverstripe/framework": ">=3.1.0",
+    "silverstripe/cms": ">=3.1.0"
+  },
+  "extra": {
+    "screenshots": [
+      "images/screens/remote-gallery-create",
+      "images/screens/remote-gallery-filter-desks",
+      "images/screens/remote-gallery-list",
+      "images/screens/remote-gallery-no-filter"
+    ]
+  },
+  "minimum-stability": "dev"
 }
