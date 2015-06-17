@@ -81,7 +81,7 @@
 #fancybox-loading div {
   width: 44px;
   height: 44px;
-  background: url('remote-gallery/images/fancybox/fancybox_loading.gif') center center no-repeat;
+  background: url('../images/fancybox/fancybox_loading.gif') center center no-repeat;
 }
 
 .fancybox-close {
@@ -135,7 +135,7 @@
   overflow: hidden;
   display: none;
   z-index: 8010;
-  background: url('remote-gallery/images/fancybox/fancybox_overlay.png');
+  background: url('../images/fancybox/fancybox_overlay.png');
 }
 
 .fancybox-overlay-fixed {
