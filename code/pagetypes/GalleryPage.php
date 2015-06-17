@@ -5,7 +5,11 @@
  */
 class GalleryPage extends Page
 {
-    private static $description = "Holds a collection of images";
+    private static $singular_name = "[Remote Gallery] Gallery page";
+
+    private static $plural_name = "[Remote Gallery] Gallery pages";
+
+    private static $description = "Remote Gallery Holds a collection of images";
 
     private static $icon = 'remote-gallery/images/icons/sitetree_images/holder.png';
 

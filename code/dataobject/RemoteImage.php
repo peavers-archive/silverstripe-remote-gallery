@@ -34,7 +34,8 @@ class RemoteImage extends DataObject
         $fields->addFieldsToTab("Root.Main", array(
             TextField::create("RemoteLink", "Remote link")
                 ->setAttribute("placeholder", "http://example.com/image.jpg")
-                ->setDescription("<strong>Note: </strong>The url must end with an image extension such as .jpg, .png, .gif")
+                ->setDescription("<strong>Note: </strong>The url must end with an image extension such as .jpg, .png,
+                 .gif"),
         ));
 
         $fields->removeByName('GalleryPageID');
