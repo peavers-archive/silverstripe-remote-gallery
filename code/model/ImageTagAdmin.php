@@ -5,7 +5,6 @@
  */
 class ImageTagAdmin extends ModelAdmin
 {
-
     private static $managed_models = array(
         'ImageTag',
     );

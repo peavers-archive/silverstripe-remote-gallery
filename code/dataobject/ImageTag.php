@@ -6,8 +6,8 @@
 class ImageTag extends DataObject
 {
     private static $db = array(
-        'Title' => 'Varchar(255)',
-        'Label' => 'Varchar(255)',
+        'Title'    => 'Varchar(255)',
+        'Label'    => 'Varchar(255)',
     );
 
     private static $belongs_many_many = array(

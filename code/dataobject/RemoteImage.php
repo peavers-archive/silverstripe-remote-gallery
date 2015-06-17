@@ -105,14 +105,14 @@ class RemoteImage extends DataObject
     public function onBeforeWrite()
     {
         // Create folder object
-        $folderToSave = 'assets/cache/';
+        $folderToSave = 'assets/Uploads/cache/';
         $folderObject = DataObject::get_one("Folder", "`Filename` = '{$folderToSave}'");
 
         if ($folderObject) {
             // Fetch the image based on the
             $url = $this->RemoteLink;
             $filename = mt_rand(10000, 999999) . "." . strtolower(pathinfo($url, PATHINFO_EXTENSION));
-            $img = ASSETS_PATH . '/cache/' . $filename;
+            $img = ASSETS_PATH . '/Uploads/cache/' . $filename;
 
             // use proxy if the environment file has a proxy definition
             if (defined('SS_OUTBOUND_PROXY') && defined('SS_OUTBOUND_PROXY_PORT')) {
@@ -131,15 +131,15 @@ class RemoteImage extends DataObject
             $backend = Injector::inst()->createWithArgs(Image::get_backend(), array($img));
             $newBackend = $backend->croppedResize(136, 136);
             $newBackend->writeTo($img);
-        }
 
-        if (!DataObject::get_one('Image', "`Name` = '{$filename}'")) {
-            $thumbnailObject = Object::create('Image');
-            $thumbnailObject->ParentID = $folderObject->ID;
-            $thumbnailObject->Name = $filename;
-            $thumbnailObject->OwnerID = (Member::currentUser() ? Member::currentUser()->ID : 0);
-            $thumbnailObject->write();
-            $this->ThumbnailImageID = DataObject::get_one('Image', "`Name` = '{$filename}'")->ID;
+            if (!DataObject::get_one('Image', "`Name` = '{$filename}'")) {
+                $thumbnailObject = Object::create('Image');
+                $thumbnailObject->ParentID = $folderObject->ID;
+                $thumbnailObject->Name = $filename;
+                $thumbnailObject->OwnerID = (Member::currentUser() ? Member::currentUser()->ID : 0);
+                $thumbnailObject->write();
+                $this->ThumbnailImageID = DataObject::get_one('Image', "`Name` = '{$filename}'")->ID;
+            }
         }
 
         parent::onBeforeWrite();
