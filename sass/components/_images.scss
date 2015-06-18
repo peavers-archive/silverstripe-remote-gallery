@@ -12,8 +12,6 @@
 
   img {
     @include safe-rem(margin-bottom, 15);
-    width: 100%;
-    border: 3px solid $blue-500;
   }
 
 }
