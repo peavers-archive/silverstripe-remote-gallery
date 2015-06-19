@@ -3,7 +3,7 @@
 /**
  * Class RemoteImage
  */
-class RemoteImage extends DataObject
+class RemoteImage extends DataObject implements PermissionProvider
 {
     private static $db = array(
         'Title'       => 'Varchar(255)',
@@ -33,6 +33,7 @@ class RemoteImage extends DataObject
 
         $fields->addFieldsToTab("Root.Main", array(
             TextField::create("RemoteLink", "Remote link")
+                ->setValue(SiteConfig::current_site_config()->RemotePrefix)
                 ->setAttribute("placeholder", "http://example.com/image.jpg")
                 ->setDescription("<strong>Note: </strong>The url must end with an image extension such as .jpg, .png,
                  .gif"),
@@ -158,4 +159,48 @@ class RemoteImage extends DataObject
 
         return parent::onBeforeDelete();
     }
+
+    //
+    // Permission providers
+    //
+    public function canEdit($member = null)
+    {
+        return Permission::check('REMOTE_GALLERY_EDIT');
+    }
+
+    public function canDelete($member = null)
+    {
+        return Permission::check('REMOTE_GALLERY_DELETE');
+    }
+
+    public function canCreate($member = null)
+    {
+        return Permission::check('REMOTE_GALLERY_CREATE');
+    }
+
+    public function canView($member = null)
+    {
+        return true;
+    }
+
+    public function providePermissions()
+    {
+        return array(
+            'REMOTE_GALLERY_EDIT'   => array(
+                'name'     => 'Edit remote gallery images',
+                'category' => 'Remote Gallery permissions'
+            ),
+
+            'REMOTE_GALLERY_DELETE' => array(
+                'name'     => 'Delete remote gallery images',
+                'category' => 'Remote Gallery permissions'
+            ),
+
+            'REMOTE_GALLERY_CREATE' => array(
+                'name'     => 'Create remote gallery images',
+                'category' => 'Remote Gallery permissions'
+            ),
+        );
+    }
+
 }

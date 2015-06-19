@@ -3,7 +3,7 @@
 /**
  * Class ImageTag
  */
-class ImageTag extends DataObject
+class ImageTag extends DataObject implements PermissionProvider
 {
     private static $db = array(
         'Title'    => 'Varchar(255)',
@@ -39,4 +39,49 @@ class ImageTag extends DataObject
 
         parent::onBeforeWrite();
     }
+
+    //
+    // Permission providers
+    //
+    public function canEdit($member = null)
+    {
+        return Permission::check('REMOTE_GALLERY_TAGS_EDIT');
+    }
+
+    public function canDelete($member = null)
+    {
+        return Permission::check('REMOTE_GALLERY_TAGS_DELETE');
+    }
+
+    public function canCreate($member = null)
+    {
+        return Permission::check('REMOTE_GALLERY_TAGS_CREATE');
+    }
+
+    public function canView($member = null)
+    {
+        return true;
+    }
+
+    public function providePermissions()
+    {
+        return array(
+            'REMOTE_GALLERY_TAGS_EDIT'   => array(
+                'name'     => 'Edit remote gallery tags',
+                'category' => 'Remote Gallery permissions'
+            ),
+
+            'REMOTE_GALLERY_TAGS_DELETE' => array(
+                'name'     => 'Delete remote gallery tags',
+                'category' => 'Remote Gallery permissions'
+            ),
+
+            'REMOTE_GALLERY_TAGS_CREATE' => array(
+                'name'     => 'Create remote gallery tags',
+                'category' => 'Remote Gallery permissions'
+            ),
+        );
+    }
+
+
 }

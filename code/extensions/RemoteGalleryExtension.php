@@ -7,18 +7,16 @@
 class RemoteGalleryExtension extends DataExtension
 {
     private static $db = array(
-        'FilePath' => 'Varchar(255)'
+        'FilePath'     => 'Varchar(255)',
+        'RemotePrefix' => 'Varchar(255)',
     );
 
     public function updateCMSFields(FieldList $fields)
     {
-
         $fields->addFieldsToTab("Root.GallerySettings", array(
-            TextField::create("FilePath", "File path")
-                ->setAttribute("placeholder", "/assets/Uploads/cache")
-                ->setDescription("Path to where the cache folder is located"),
+            TextField::create("RemotePrefix", "Prefix the remote URL")
+                ->setDescription("Useful if you have a CloudFront URL for example"),
         ));
-
     }
 
 }
