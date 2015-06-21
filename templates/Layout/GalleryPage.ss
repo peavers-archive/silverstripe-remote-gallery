@@ -33,10 +33,10 @@
     <div class="row container" id="container">
         <% loop getThumbnailImage %>
 
-            <div class="col-2 mix <% loop $getTag %>category-$Title <% end_loop %>">
-                <a href="$RemoteLink" class="light-box"
-                   title="<h1>$Title</h1><% if $Description %><p>$Description</p><% end_if %>">$ThumbnailImage</a>
-            </div>
+        <div class="col-2 mix <% loop $getTag %>category-$Title <% end_loop %>">
+            <a href="$RemoteLink" class="light-box"
+               title="<% if $Title %><h1>$Title</h1><% end_if %> <% if $Description %><p>$Description</p><% end_if %>">$ThumbnailImage</a>
+        </div>
 
         <% end_loop %>
     </div>

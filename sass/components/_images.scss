@@ -11,7 +11,14 @@
   }
 
   img {
+    @extend %base-shadow;
     @include safe-rem(margin-bottom, 15);
+    @include transition(all .2s ease-in-out);
+
+    &:hover {
+      @extend %hover-shadow;
+    }
+
   }
 
 }
@@ -32,5 +39,6 @@
 }
 
 .fancybox-skin {
+  @extend %hover-shadow;
   @include safe-rem(margin, 20);
 }

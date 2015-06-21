@@ -27,6 +27,9 @@ class GalleryPage extends Page
             GridField::create('RemoteImage', 'Images', $this->RemoteImage(), GridFieldConfig_RecordEditor::create()),
         ));
 
+        // Remove default tag tab to avoid confusion.
+        $fields->removeByName('Tags');
+
         return $fields;
     }
 
@@ -57,7 +60,7 @@ class GalleryPage_Controller extends Page_Controller
 
     public function getThumbnailImage()
     {
-        return RemoteImage::get()->sort('Created', 'DESC');
+        return RemoteImage::get()->filter(array("GalleryPageID" => $this->ID))->sort('Created', 'DESC');
     }
 
 }
